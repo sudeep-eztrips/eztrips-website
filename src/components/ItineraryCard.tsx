@@ -33,7 +33,7 @@ export default function ItineraryCard({ image, duration, title, highlights, pric
         </div>
       </div>
 
-      <div className="p-5">
+      <div className="p-6">
         <h3 className="font-bold text-on-surface text-base leading-snug mb-3">{title}</h3>
         <ul className="space-y-1.5 mb-4">
           {highlights.map((h) => (

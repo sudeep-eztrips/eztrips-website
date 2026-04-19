@@ -104,13 +104,13 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
     )
   }
 
-  const inputClass = 'w-full bg-white/10 text-white placeholder-white/40 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-tertiary transition-colors'
-  const labelClass = 'block text-white/70 text-xs font-semibold uppercase tracking-label mb-1.5'
+  const inputClass = 'w-full bg-white/10 text-white placeholder-white/40 border border-white/20 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-tertiary transition-colors'
+  const labelClass = 'block text-white/70 text-xs font-semibold uppercase tracking-label mb-2'
   const errClass = 'text-red-300 text-xs mt-1'
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={`space-y-5 ${className}`}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className={`space-y-6 ${className}`}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label className={labelClass}>Full Name *</label>
           <input {...register('name')} placeholder="Rahul Sharma" className={inputClass} />
@@ -146,7 +146,7 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
       </div>
 
       {/* Travel Dates */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label className={labelClass}>Approx. Travel Date</label>
           <input {...register('travelDate')} type="date" className={inputClass} />
@@ -174,13 +174,15 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
       {/* Travellers */}
       <div>
         <label className={labelClass}>Travellers</label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div>
-            <input {...register('adults')} type="number" min="1" placeholder="Adults" className={inputClass} />
+            <label className="block text-white/60 text-xs mb-1.5">Adults</label>
+            <input {...register('adults')} type="number" min="1" placeholder="1" className={inputClass} />
             {errors.adults && <p className={errClass}>{errors.adults.message}</p>}
           </div>
           <div>
-            <input {...register('children')} type="number" min="0" placeholder="Children" className={inputClass} />
+            <label className="block text-white/60 text-xs mb-1.5">Children</label>
+            <input {...register('children')} type="number" min="0" placeholder="0" className={inputClass} />
           </div>
         </div>
         <AnimatePresence>
@@ -206,7 +208,7 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
       </div>
 
       {/* Budget */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label className={labelClass}>Budget Range (optional)</label>
           <select {...register('budgetRange')} className={inputClass + ' appearance-none'}>

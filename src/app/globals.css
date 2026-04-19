@@ -22,6 +22,7 @@ body {
   background-color: #faf8ff;
   color: #191b22;
   font-family: var(--font-sans);
+  line-height: 1.8;
 }
 
 @layer components {
@@ -35,7 +36,8 @@ body {
     @apply text-xs font-semibold tracking-label uppercase text-tertiary-dark;
   }
   .section-heading {
-    @apply text-4xl md:text-5xl font-extrabold text-on-surface leading-tight tracking-tight;
+    @apply text-4xl md:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-8;
+    letter-spacing: -0.01em;
   }
   .card-glass {
     @apply bg-white/80 backdrop-blur-xl rounded-xl shadow-card border-0;

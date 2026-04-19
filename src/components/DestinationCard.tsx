@@ -42,7 +42,7 @@ export default function DestinationCard({
           </div>
 
           {/* Content */}
-          <div className={`p-4 ${isPilgrimage ? 'bg-pilgrimage-ivory' : 'bg-white'}`}>
+          <div className={`p-6 ${isPilgrimage ? 'bg-pilgrimage-ivory' : 'bg-white'}`}>
             <div className="flex items-start justify-between gap-2">
               <div>
                 <h3 className={`font-bold text-base leading-snug ${isPilgrimage ? 'text-pilgrimage-maroon' : 'text-on-surface'}`}>

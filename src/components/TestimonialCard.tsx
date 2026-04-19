@@ -18,7 +18,7 @@ export default function TestimonialCard({ quote, author, location, rating = 5, i
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="bg-surface rounded-xl p-6 shadow-card"
+      className="bg-surface rounded-xl p-7 shadow-card"
     >
       <div className="flex gap-0.5 mb-4">
         {Array.from({ length: rating }).map((_, i) => (

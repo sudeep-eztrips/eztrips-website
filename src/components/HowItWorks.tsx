@@ -26,7 +26,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-5xl mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
           <p className="section-label mb-3">The EzTrips Way</p>

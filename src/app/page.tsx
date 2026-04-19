@@ -25,7 +25,7 @@ const experiences = [
 
 const itineraries = [
   {
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800',
+    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1600&h=900&fit=crop&q=80',
     duration: '7 Days',
     title: '7 Days in Bali — Temples, Rice Terraces & Beaches',
     highlights: ['Visit Tanah Lot & Uluwatu temples', 'Tegalalang rice terrace sunrise trek', 'Seminyak & Nusa Dua beach days'],
@@ -33,7 +33,7 @@ const itineraries = [
     slug: 'bali',
   },
   {
-    image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800',
+    image: 'https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?w=1600&h=900&fit=crop&q=80',
     duration: '8 Days',
     title: '8 Days Thailand — Bangkok, Phuket & Krabi',
     highlights: ['Grand Palace & temple tours in Bangkok', 'Phi Phi Islands speedboat day trip', 'Kayaking through Railay Beach caves'],
@@ -41,7 +41,7 @@ const itineraries = [
     slug: 'thailand',
   },
   {
-    image: 'https://images.unsplash.com/photo-1609766857384-89bfb69ac882?w=800',
+    image: 'https://images.unsplash.com/photo-1609766857384-89bfb69ac882?w=1600&h=900&fit=crop&q=80',
     duration: '12 Days',
     title: 'Char Dham Yatra — 12 Days Spiritual Journey',
     highlights: ['Yamunotri & Gangotri darshans', 'Kedarnath helicopter option', 'Badrinath aarti & temple ceremony'],
@@ -82,7 +82,7 @@ export default function Home() {
         <TrustBar />
 
         {/* Destinations */}
-        <section id="destinations" className="py-24 bg-white">
+        <section id="destinations" className="py-20 md:py-28 bg-white">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="text-center mb-12">
               <p className="section-label mb-3">Where Would You Like to Go?</p>
@@ -119,7 +119,7 @@ export default function Home() {
         </section>
 
         {/* Experiences */}
-        <section id="experiences" className="py-24 bg-surface">
+        <section id="experiences" className="py-20 md:py-28 bg-surface">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="text-center mb-12">
               <p className="section-label mb-3">Travel Your Way</p>
@@ -139,7 +139,7 @@ export default function Home() {
         <HowItWorks />
 
         {/* Featured Itineraries */}
-        <section className="py-24 bg-surface">
+        <section className="py-20 md:py-28 bg-surface">
           <div className="max-w-6xl mx-auto px-4 md:px-8">
             <div className="text-center mb-12">
               <p className="section-label mb-3">Curated Experiences</p>
@@ -154,7 +154,7 @@ export default function Home() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-24 bg-white">
+        <section className="py-20 md:py-28 bg-white">
           <div className="max-w-5xl mx-auto px-4 md:px-8">
             <div className="text-center mb-12">
               <p className="section-label mb-3">What Our Travellers Say</p>
@@ -169,7 +169,7 @@ export default function Home() {
         </section>
 
         {/* Enquiry Form */}
-        <section id="enquiry-form" className="py-24 bg-primary-gradient">
+        <section id="enquiry-form" className="py-20 md:py-28 bg-primary-gradient">
           <div className="max-w-3xl mx-auto px-4 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
