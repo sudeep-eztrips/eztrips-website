@@ -27,6 +27,26 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
+function BudgetTypeToggle({ register, control }: { register: ReturnType<typeof useForm<FormData>>['register']; control: ReturnType<typeof useForm<FormData>>['control'] }) {
+  const budgetType = useWatch({ control, name: 'budgetType' })
+  return (
+    <div className="flex rounded-xl overflow-hidden border border-white/20">
+      {(['per_person', 'total_group'] as const).map((type) => (
+        <label key={type} className="flex-1 cursor-pointer">
+          <input {...register('budgetType')} type="radio" value={type} className="sr-only" />
+          <div className={`text-center py-3 text-sm font-medium transition-colors ${
+            budgetType === type
+              ? 'bg-tertiary text-white'
+              : 'bg-white/10 text-white/70 hover:bg-white/20'
+          }`}>
+            {type === 'per_person' ? 'Per Person' : 'Total Group'}
+          </div>
+        </label>
+      ))}
+    </div>
+  )
+}
+
 interface EnquiryFormProps {
   defaultDestination?: string
   className?: string
@@ -68,15 +88,24 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
     setServerError('')
     try {
       const apiUrl = process.env.NEXT_PUBLIC_SAAS_API_URL || 'https://eztrips-saas.vercel.app'
+      const payload = { ...data, source: 'website' }
+      console.log('[EnquiryForm] Submitting:', payload)
       const res = await fetch(`${apiUrl}/api/website/enquiry`, {
         method: 'POST',
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, source: 'website' }),
+        body: JSON.stringify(payload),
       })
-      if (!res.ok) throw new Error('Failed to submit')
+      const resData = await res.json()
+      console.log('[EnquiryForm] Response:', res.status, resData)
+      if (!res.ok) {
+        console.error('[EnquiryForm] Error:', resData)
+        throw new Error(resData.error || `Server error (${res.status})`)
+      }
       setSubmitted(true)
-    } catch {
-      setServerError('Something went wrong. Please try again or WhatsApp us directly.')
+    } catch (err) {
+      console.error('[EnquiryForm] Fetch error:', err)
+      setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again or WhatsApp us directly.')
     } finally {
       setLoading(false)
     }
@@ -222,18 +251,7 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
         </div>
         <div>
           <label className={labelClass}>Budget Type</label>
-          <div className="flex rounded-xl overflow-hidden border border-white/20">
-            {(['per_person', 'total_group'] as const).map((type) => (
-              <label key={type} className="flex-1 cursor-pointer">
-                <input {...register('budgetType')} type="radio" value={type} className="sr-only" />
-                <div className={`text-center py-3 text-sm font-medium transition-colors ${
-                  type === 'per_person' ? 'bg-white/10 text-white/70 hover:bg-white/20' : 'bg-white/10 text-white/70 hover:bg-white/20'
-                }`}>
-                  {type === 'per_person' ? 'Per Person' : 'Total Group'}
-                </div>
-              </label>
-            ))}
-          </div>
+          <BudgetTypeToggle register={register} control={control} />
         </div>
       </div>
 

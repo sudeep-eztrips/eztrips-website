@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
@@ -38,9 +39,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary-gradient rounded-lg flex items-center justify-center">
-              <span className="text-white font-extrabold text-sm">Ez</span>
-            </div>
+            <Image src="/logo.png" alt="EzTrips" width={36} height={36} className="object-contain" />
             <span
               className={`font-extrabold text-xl tracking-tight ${
                 scrolled ? 'text-primary' : 'text-white'

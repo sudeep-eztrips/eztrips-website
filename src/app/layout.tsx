@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import WhatsAppButton from '@/components/WhatsAppButton'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://eztrips.in'),
@@ -45,7 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   )
 }
