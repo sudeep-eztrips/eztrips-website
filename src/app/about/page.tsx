@@ -25,7 +25,7 @@ export default function AboutPage() {
         <h2 className="text-3xl font-bold text-primary mb-6">Our Story</h2>
         <div className="space-y-4 text-on-surface/70 leading-relaxed">
           <p>
-            EzTrips is a premium travel agency founded by <strong className="text-on-surface">Sudeep Sharma</strong> with one
+            EzTrips is a premium travel agency co-founded by <strong className="text-on-surface">Sudeep Sharma</strong> and <strong className="text-on-surface">Nishan Choubey</strong> with one
             simple mission: make travel hassle-free. We believe that planning a trip should be
             as enjoyable as the trip itself.
           </p>
@@ -65,11 +65,15 @@ export default function AboutPage() {
         <h2 className="text-3xl font-bold text-primary mb-6">Our Team</h2>
         <p className="text-on-surface/50 mb-8">Meet the people behind your perfect trip. Team profiles coming soon.</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-          {['Sudeep Sharma', 'Team Member', 'Team Member'].map((name, i) => (
+          {[
+            { name: 'Sudeep Sharma', role: 'Co-Founder' },
+            { name: 'Nishan Choubey', role: 'Co-Founder' },
+            { name: 'Team Member', role: 'Travel Expert' },
+          ].map((member, i) => (
             <div key={i} className="bg-surface rounded-2xl p-8">
               <div className="w-20 h-20 rounded-full bg-primary/20 mx-auto mb-4" />
-              <p className="font-semibold text-primary">{name}</p>
-              <p className="text-sm text-on-surface/50">{i === 0 ? 'Founder' : 'Travel Expert'}</p>
+              <p className="font-semibold text-primary">{member.name}</p>
+              <p className="text-sm text-on-surface/50">{member.role}</p>
             </div>
           ))}
         </div>
