@@ -16,6 +16,8 @@ const schema = z.object({
   travelDate: z.string().optional(),
   dateFlexible: z.boolean().optional(),
   flexibilityDays: z.string().optional(),
+  numberOfNights: z.coerce.number().min(1).optional(),
+  hotelCategory: z.string().optional(),
   adults: z.coerce.number().min(1, 'At least 1 adult'),
   children: z.coerce.number().min(0).default(0),
   childrenAges: z.array(z.coerce.number().min(0).max(17)).optional(),
@@ -197,6 +199,25 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Nights & Hotel Category */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label className={labelClass}>Number of Nights</label>
+          <input {...register('numberOfNights')} type="number" min="1" placeholder="e.g. 5" className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Hotel Category Preference</label>
+          <select {...register('hotelCategory')} className={inputClass + ' appearance-none cursor-pointer'}>
+            <option value="" className="bg-primary">Select category...</option>
+            <option value="budget" className="bg-primary">Budget</option>
+            <option value="standard" className="bg-primary">Standard (3 Star)</option>
+            <option value="deluxe" className="bg-primary">Deluxe (4 Star)</option>
+            <option value="luxury" className="bg-primary">Luxury (5 Star)</option>
+            <option value="ultra_luxury" className="bg-primary">Ultra Luxury</option>
+          </select>
         </div>
       </div>
 
