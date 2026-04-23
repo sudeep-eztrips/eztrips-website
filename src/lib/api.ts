@@ -34,6 +34,8 @@ export type Package = {
   highlights: string[] | null;
   inclusions: string[] | null;
   exclusions: string[] | null;
+  itinerary_days: { day: number; title: string; description: string }[] | null;
+  sample_hotels: { name: string; stars: number; location: string; image: string }[] | null;
   published: boolean;
   sort_order: number;
 };
