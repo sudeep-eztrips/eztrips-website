@@ -10,20 +10,47 @@ import Footer from '@/components/Footer'
 import EnquiryForm from '@/components/EnquiryForm'
 import StickyEnquiryBar from '@/components/StickyEnquiryBar'
 import { destinationDetails } from '@/lib/destinationData'
+import { allDestinations } from '@/lib/data'
 import DestinationPackages from '@/components/DestinationPackages'
 
 export default function DestinationPage({ params }: { params: { slug: string } }) {
   const dest = destinationDetails[params.slug]
   const [openDay, setOpenDay] = useState<number | null>(0)
 
+  // Fallback: show packages page for destinations without detailed content
   if (!dest) {
+    const basicDest = allDestinations.find(d => d.slug === params.slug)
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-on-surface mb-4">Destination not found</h1>
-          <Link href="/destinations" className="btn-primary inline-block">View All Destinations</Link>
-        </div>
-      </div>
+      <>
+        <Navbar />
+        <main>
+          <section className="relative h-[50vh] overflow-hidden">
+            {basicDest?.image && (
+              <Image src={basicDest.image} alt={basicDest?.name || params.slug} fill className="object-cover" priority sizes="100vw" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
+            <div className="absolute bottom-12 left-6 md:left-16">
+              <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-2">
+                {basicDest?.name || params.slug}
+              </h1>
+              {basicDest?.region && <p className="text-white/70 text-lg">{basicDest.region}</p>}
+            </div>
+          </section>
+          <div className="max-w-6xl mx-auto px-4 md:px-8 py-16">
+            <DestinationPackages destinationSlug={params.slug} />
+          </div>
+          <section id="enquiry-form" className="py-16 bg-primary-gradient">
+            <div className="max-w-2xl mx-auto px-4">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold text-white">Plan Your {basicDest?.name || ''} Trip</h2>
+                <p className="text-white/70 mt-2">Tell us your preferences and we&apos;ll craft the perfect itinerary.</p>
+              </div>
+              <EnquiryForm defaultDestination={params.slug} />
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </>
     )
   }
 

@@ -38,15 +38,8 @@ export default function Navbar() {
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="EzTrips" width={36} height={36} className="object-contain" />
-            <span
-              className={`font-extrabold text-xl tracking-tight ${
-                scrolled ? 'text-primary' : 'text-white'
-              }`}
-            >
-              EzTrips
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image src="/logo.png" alt="EzTrips" width={140} height={40} className="object-contain" />
           </Link>
 
           {/* Desktop nav */}
