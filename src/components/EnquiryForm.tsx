@@ -139,7 +139,7 @@ export default function EnquiryForm({ defaultDestination = '', defaultNights, de
     )
   }
 
-  const inputClass = 'w-full bg-white/10 text-white placeholder-white/40 border border-white/20 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-tertiary transition-colors'
+  const inputClass = 'w-full bg-white/10 text-white placeholder-white/40 border border-white/20 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-tertiary transition-colors appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
   const labelClass = 'block text-white/70 text-xs font-semibold uppercase tracking-label mb-2'
   const errClass = 'text-red-300 text-xs mt-1'
 
