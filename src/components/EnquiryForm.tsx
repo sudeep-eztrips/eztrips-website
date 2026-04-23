@@ -51,10 +51,12 @@ function BudgetTypeToggle({ register, control }: { register: ReturnType<typeof u
 
 interface EnquiryFormProps {
   defaultDestination?: string
+  defaultNights?: number
+  defaultHotelCategory?: string
   className?: string
 }
 
-export default function EnquiryForm({ defaultDestination = '', className = '' }: EnquiryFormProps) {
+export default function EnquiryForm({ defaultDestination = '', defaultNights, defaultHotelCategory, className = '' }: EnquiryFormProps) {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
@@ -69,6 +71,8 @@ export default function EnquiryForm({ defaultDestination = '', className = '' }:
     resolver: zodResolver(schema),
     defaultValues: {
       destination: defaultDestination,
+      numberOfNights: defaultNights,
+      hotelCategory: defaultHotelCategory || '',
       adults: 1,
       children: 0,
       whatsappOptin: true,

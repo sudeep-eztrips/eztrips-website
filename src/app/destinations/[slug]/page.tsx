@@ -10,6 +10,7 @@ import Footer from '@/components/Footer'
 import EnquiryForm from '@/components/EnquiryForm'
 import StickyEnquiryBar from '@/components/StickyEnquiryBar'
 import { destinationDetails } from '@/lib/destinationData'
+import DestinationPackages from '@/components/DestinationPackages'
 
 export default function DestinationPage({ params }: { params: { slug: string } }) {
   const dest = destinationDetails[params.slug]
@@ -93,6 +94,9 @@ export default function DestinationPage({ params }: { params: { slug: string } }
                   ))}
                 </div>
               </section>
+
+              {/* Packages */}
+              <DestinationPackages destinationSlug={params.slug} />
 
               {/* Highlights */}
               <section>
