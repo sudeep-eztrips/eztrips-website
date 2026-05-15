@@ -58,3 +58,18 @@ export async function fetchPackageBySlug(slug: string): Promise<Package | null> 
   if (!res.ok) return null;
   return res.json();
 }
+
+export type CmsPage = {
+  slug: string;
+  title: string;
+  content: string;
+  hero_image: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+};
+
+export async function fetchPage(slug: string): Promise<CmsPage | null> {
+  const res = await fetch(`${API_URL}/api/website/public/pages?slug=${slug}`, { next: { revalidate: 300 } });
+  if (!res.ok) return null;
+  return res.json();
+}

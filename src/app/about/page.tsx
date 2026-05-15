@@ -1,6 +1,16 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import { MapPin, Clock, Pencil, BadgeIndianRupee } from 'lucide-react'
+import { fetchPage } from '@/lib/api'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await fetchPage('about')
+  return {
+    title: page?.seo_title || 'About EzTrips — Premium Travel Experiences',
+    description: page?.seo_description || 'Premium travel experiences, zero hassle. Meet the team behind EzTrips.',
+  }
+}
 
 const reasons = [
   { icon: MapPin, title: 'Expert Planning', desc: 'Curated itineraries by travel experts who have been there, done that.' },
@@ -9,37 +19,50 @@ const reasons = [
   { icon: BadgeIndianRupee, title: 'Best Price Promise', desc: 'Competitive pricing with no hidden costs. Transparent quotes, always.' },
 ]
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const page = await fetchPage('about')
+
+  // CMS content sections — parsed from the markdown/HTML content field
+  // The CMS content is used for the "Our Story" section text
+  const storyContent = page?.content || null
+
   return (
     <>
       <Navbar />
 
       {/* Hero */}
       <section className="bg-primary-gradient pt-32 pb-20 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">About EzTrips</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{page?.title || 'About EzTrips'}</h1>
         <p className="text-lg text-white/70 max-w-xl mx-auto">Premium travel experiences, zero hassle.</p>
       </section>
 
       {/* Our Story */}
       <section className="max-w-4xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-primary mb-6">Our Story</h2>
-        <div className="space-y-4 text-on-surface/70 leading-relaxed">
-          <p>
-            EzTrips is a premium travel agency co-founded by <strong className="text-on-surface">Sudeep Sharma</strong> and <strong className="text-on-surface">Nishan Choubey</strong> with one
-            simple mission: make travel hassle-free. We believe that planning a trip should be
-            as enjoyable as the trip itself.
-          </p>
-          <p>
-            From weekend getaways to international adventures, we handle every detail &mdash;
-            flights, hotels, transfers, activities &mdash; so you can focus on making memories.
-            Our team of travel experts brings deep destination knowledge and a passion for
-            crafting personalised itineraries that fit your style and budget.
-          </p>
-          <p>
-            Whether you&apos;re a solo traveller, a couple, or a large group, EzTrips ensures a
-            seamless experience from enquiry to return.
-          </p>
-        </div>
+        {storyContent ? (
+          <div
+            className="space-y-4 text-on-surface/70 leading-relaxed prose prose-p:text-on-surface/70 max-w-none"
+            dangerouslySetInnerHTML={{ __html: storyContent }}
+          />
+        ) : (
+          <div className="space-y-4 text-on-surface/70 leading-relaxed">
+            <p>
+              EzTrips is a premium travel agency co-founded by <strong className="text-on-surface">Sudeep Sharma & Nishan Choubey</strong> and <strong className="text-on-surface">Nishan Choubey</strong> with one
+              simple mission: make travel hassle-free. We believe that planning a trip should be
+              as enjoyable as the trip itself.
+            </p>
+            <p>
+              From weekend getaways to international adventures, we handle every detail &mdash;
+              flights, hotels, transfers, activities &mdash; so you can focus on making memories.
+              Our team of travel experts brings deep destination knowledge and a passion for
+              crafting personalised itineraries that fit your style and budget.
+            </p>
+            <p>
+              Whether you&apos;re a solo traveller, a couple, or a large group, EzTrips ensures a
+              seamless experience from enquiry to return.
+            </p>
+          </div>
+        )}
       </section>
 
       {/* Why Choose Us */}
