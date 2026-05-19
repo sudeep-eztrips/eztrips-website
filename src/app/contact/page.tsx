@@ -1,12 +1,16 @@
 import type { Metadata } from 'next'
-import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react'
+import { Phone, Mail, Clock, MessageCircle } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import EnquiryForm from '@/components/EnquiryForm'
+import { fetchPage } from '@/lib/api'
 
-export const metadata: Metadata = {
-  title: 'Contact Us — EzTrips',
-  description: 'Get in touch with EzTrips. Call, email, or WhatsApp us for travel enquiries and support.',
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await fetchPage('contact')
+  return {
+    title: page?.seo_title || 'Contact Us — EzTrips',
+    description: page?.seo_description || 'Get in touch with EzTrips. Call, email, or WhatsApp us for travel enquiries and support.',
+  }
 }
 
 const contactInfo = [
@@ -39,7 +43,9 @@ const contactInfo = [
   },
 ]
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const page = await fetchPage('contact')
+
   return (
     <>
       <Navbar />
@@ -48,7 +54,7 @@ export default function ContactPage() {
           <div className="max-w-4xl mx-auto px-4 md:px-8">
             <p className="section-label text-tertiary mb-3">Get In Touch</p>
             <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-              Contact Us
+              {page?.title || 'Contact Us'}
             </h1>
             <p className="text-white/60 mt-3 text-lg">Have a question or ready to plan your trip? We&apos;re here to help.</p>
           </div>
@@ -56,6 +62,14 @@ export default function ContactPage() {
 
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 md:px-8">
+            {/* CMS content area — renders above contact cards if content exists */}
+            {page?.content && (
+              <div
+                className="prose prose-gray max-w-none mb-12 text-on-surface/80 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: page.content }}
+              />
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
               {contactInfo.map(item => {
                 const Icon = item.icon
