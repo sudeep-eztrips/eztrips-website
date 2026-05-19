@@ -17,6 +17,16 @@ export default function DestinationPage({ params }: { params: { slug: string } }
   const dest = destinationDetails[params.slug]
   const [openDay, setOpenDay] = useState<number | null>(0)
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://eztrips.in' },
+      { '@type': 'ListItem', position: 2, name: 'Destinations', item: 'https://eztrips.in/destinations' },
+      { '@type': 'ListItem', position: 3, name: dest?.name || params.slug },
+    ],
+  }
+
   // Fallback: show packages page for destinations without detailed content
   if (!dest) {
     const basicDest = allDestinations.find(d => d.slug === params.slug)
@@ -56,6 +66,7 @@ export default function DestinationPage({ params }: { params: { slug: string } }
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
       <main>
         {/* Hero */}

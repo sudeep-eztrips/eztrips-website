@@ -11,7 +11,7 @@ import { allDestinations } from '@/lib/data'
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email('Valid email required'),
-  phone: z.string().regex(/^(\+91)?[6-9]\d{9}$/, 'Enter a valid Indian mobile number'),
+  phone: z.string().regex(/^\+?[1-9]\d{6,14}$/, 'Enter a valid phone number'),
   destination: z.string().min(1, 'Please select a destination'),
   travelDate: z.string().optional(),
   dateFlexible: z.boolean().optional(),
@@ -147,23 +147,23 @@ export default function EnquiryForm({ defaultDestination = '', defaultNights, de
     <form onSubmit={handleSubmit(onSubmit)} className={`space-y-6 ${className}`}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className={labelClass}>Full Name *</label>
-          <input {...register('name')} placeholder="Rahul Sharma" className={inputClass} />
-          {errors.name && <p className={errClass}>{errors.name.message}</p>}
+          <label htmlFor="eq-name" className={labelClass}>Full Name *</label>
+          <input {...register('name')} id="eq-name" placeholder="Rahul Sharma" className={inputClass} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'eq-name-err' : undefined} />
+          {errors.name && <p id="eq-name-err" className={errClass}>{errors.name.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Email *</label>
-          <input {...register('email')} type="email" placeholder="rahul@example.com" className={inputClass} />
-          {errors.email && <p className={errClass}>{errors.email.message}</p>}
+          <label htmlFor="eq-email" className={labelClass}>Email *</label>
+          <input {...register('email')} id="eq-email" type="email" placeholder="rahul@example.com" className={inputClass} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'eq-email-err' : undefined} />
+          {errors.email && <p id="eq-email-err" className={errClass}>{errors.email.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Phone *</label>
-          <input {...register('phone')} type="tel" placeholder="+91 98765 43210" className={inputClass} />
-          {errors.phone && <p className={errClass}>{errors.phone.message}</p>}
+          <label htmlFor="eq-phone" className={labelClass}>Phone *</label>
+          <input {...register('phone')} id="eq-phone" type="tel" placeholder="+91 98765 43210" className={inputClass} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? 'eq-phone-err' : undefined} />
+          {errors.phone && <p id="eq-phone-err" className={errClass}>{errors.phone.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Destination *</label>
-          <select {...register('destination')} className={inputClass + ' appearance-none cursor-pointer'}>
+          <label htmlFor="eq-destination" className={labelClass}>Destination *</label>
+          <select {...register('destination')} id="eq-destination" className={inputClass + ' appearance-none cursor-pointer'} aria-invalid={!!errors.destination}>
             <option value="" className="bg-primary text-white">Select destination...</option>
             <optgroup label="Holiday" className="bg-primary">
               {allDestinations.slice(0, 21).map(d => (

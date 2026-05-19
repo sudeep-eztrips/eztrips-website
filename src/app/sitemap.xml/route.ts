@@ -1,15 +1,21 @@
 import { NextResponse } from 'next/server'
+import { allDestinations } from '@/lib/data'
 
 const BASE_URL = 'https://eztrips.in'
-const slugs = ['thailand', 'bali', 'andaman', 'kashmir', 'japan', 'char-dham']
 
 export function GET() {
   const urls = [
     { loc: BASE_URL, changefreq: 'weekly', priority: '1.0' },
     { loc: `${BASE_URL}/destinations`, changefreq: 'weekly', priority: '0.9' },
+    { loc: `${BASE_URL}/pilgrimage`, changefreq: 'weekly', priority: '0.9' },
+    { loc: `${BASE_URL}/about`, changefreq: 'monthly', priority: '0.7' },
     { loc: `${BASE_URL}/blog`, changefreq: 'weekly', priority: '0.8' },
-    ...slugs.map(slug => ({
-      loc: `${BASE_URL}/destinations/${slug}`,
+    { loc: `${BASE_URL}/faq`, changefreq: 'monthly', priority: '0.7' },
+    { loc: `${BASE_URL}/contact`, changefreq: 'yearly', priority: '0.6' },
+    { loc: `${BASE_URL}/privacy`, changefreq: 'yearly', priority: '0.3' },
+    { loc: `${BASE_URL}/terms`, changefreq: 'yearly', priority: '0.3' },
+    ...allDestinations.map(dest => ({
+      loc: `${BASE_URL}/destinations/${dest.slug}`,
       changefreq: 'monthly',
       priority: '0.8',
     })),

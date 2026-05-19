@@ -31,7 +31,7 @@ export default function Footer() {
               <a href="#" className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
                 <Facebook size={18} />
               </a>
-              <a href="https://wa.me/91" className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
+              <a href="https://wa.me/916203507070" className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
                 <WhatsAppIcon />
               </a>
             </div>
@@ -74,8 +74,10 @@ export default function Footer() {
               {[
                 { label: 'About', href: '/about' },
                 { label: 'Blog', href: '/blog' },
-                { label: 'Contact', href: '/#enquiry-form' },
+                { label: 'FAQ', href: '/faq' },
+                { label: 'Contact', href: '/contact' },
                 { label: 'Privacy Policy', href: '/privacy' },
+                { label: 'Terms & Conditions', href: '/terms' },
               ].map(item => (
                 <li key={item.label}><Link href={item.href} className="text-white/70 text-sm hover:text-white transition-colors">{item.label}</Link></li>
               ))}

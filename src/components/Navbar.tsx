@@ -1,21 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Search } from 'lucide-react'
+import SearchOverlay from './SearchOverlay'
 
 const navLinks = [
   { label: 'Destinations', href: '/destinations' },
   { label: 'Experiences', href: '/#experiences' },
   { label: 'Pilgrimage', href: '/pilgrimage' },
   { label: 'Blog', href: '/blog' },
+  { label: 'FAQ', href: '/faq' },
   { label: 'About', href: '/about' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const closeSearch = useCallback(() => setSearchOpen(false), [])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -58,20 +62,36 @@ export default function Navbar() {
           </div>
 
           {/* CTA */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className={`p-2 rounded-lg transition-colors ${scrolled ? 'text-on-surface/60 hover:text-on-surface' : 'text-white/70 hover:text-white'}`}
+              aria-label="Search destinations"
+            >
+              <Search size={18} />
+            </button>
             <Link href="/#enquiry-form" className="btn-primary text-sm">
               Plan My Trip
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className={`md:hidden p-2 rounded-lg ${scrolled ? 'text-on-surface' : 'text-white'}`}
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Mobile buttons */}
+          <div className="flex items-center gap-1 md:hidden">
+            <button
+              className={`p-2 rounded-lg ${scrolled ? 'text-on-surface' : 'text-white'}`}
+              onClick={() => setSearchOpen(true)}
+              aria-label="Search destinations"
+            >
+              <Search size={20} />
+            </button>
+            <button
+              className={`p-2 rounded-lg ${scrolled ? 'text-on-surface' : 'text-white'}`}
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
@@ -101,6 +121,7 @@ export default function Navbar() {
           </div>
         )}
       </div>
+      <SearchOverlay open={searchOpen} onClose={closeSearch} />
     </nav>
   )
 }

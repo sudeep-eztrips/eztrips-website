@@ -1,13 +1,10 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import BlogCard from '@/components/BlogCard'
 import Link from 'next/link'
-
-export const metadata: Metadata = {
-  title: 'Travel Blog — EzTrips',
-  description: 'Destination guides, travel tips, pilgrimage stories, and packing lists from the EzTrips team.',
-}
 
 const categories = ['All', 'Destination Guides', 'Travel Tips', 'Pilgrimage', 'Food & Culture', 'Packing Lists']
 
@@ -42,6 +39,12 @@ const posts = [
 ]
 
 export default function BlogPage() {
+  const [activeCategory, setActiveCategory] = useState('All')
+
+  const filtered = activeCategory === 'All'
+    ? posts
+    : posts.filter(p => p.category === activeCategory)
+
   return (
     <>
       <Navbar />
@@ -60,11 +63,14 @@ export default function BlogPage() {
         {/* Category filter */}
         <div className="bg-white border-b border-surface">
           <div className="max-w-6xl mx-auto px-4 md:px-8 flex gap-2 overflow-x-auto py-4">
-            {categories.map((cat, i) => (
+            {categories.map(cat => (
               <button
                 key={cat}
+                onClick={() => setActiveCategory(cat)}
                 className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  i === 0 ? 'bg-primary text-white' : 'bg-surface text-on-surface/60 hover:text-on-surface'
+                  activeCategory === cat
+                    ? 'bg-primary text-white'
+                    : 'bg-surface text-on-surface/60 hover:text-on-surface'
                 }`}
               >
                 {cat}
@@ -76,23 +82,30 @@ export default function BlogPage() {
         {/* Posts */}
         <section className="py-16 bg-white">
           <div className="max-w-6xl mx-auto px-4 md:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {posts.map((post, i) => (
-                <BlogCard key={post.slug} {...post} index={i} />
-              ))}
-            </div>
+            {filtered.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {filtered.map((post, i) => (
+                  <BlogCard key={post.slug} {...post} index={i} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <p className="text-xl font-semibold text-on-surface mb-2">No posts yet in this category</p>
+                <p className="text-on-surface/50">Check back soon — we&apos;re writing new guides every week.</p>
+              </div>
+            )}
 
             <div className="mt-16 text-center py-16 bg-surface rounded-2xl">
               <p className="text-2xl font-bold text-on-surface mb-3">More stories coming soon</p>
-              <p className="text-on-surface/60 mb-6">Subscribe to get travel guides & exclusive deals delivered to your inbox.</p>
-              <div className="flex gap-3 max-w-sm mx-auto">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="flex-1 bg-white border border-surface rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
-                />
-                <button className="btn-primary text-sm px-5 py-3">Subscribe</button>
-              </div>
+              <p className="text-on-surface/60 mb-6">Follow us on Instagram for daily travel inspiration and exclusive deals.</p>
+              <a
+                href="https://instagram.com/eztrips.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-block text-sm px-6 py-3"
+              >
+                Follow @eztrips.in
+              </a>
             </div>
           </div>
         </section>
