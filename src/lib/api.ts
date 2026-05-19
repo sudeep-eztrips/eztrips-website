@@ -68,6 +68,37 @@ export type CmsPage = {
   seo_description: string | null;
 };
 
+export type BlogPost = {
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  content?: string;
+  hero_image: string | null;
+  tags: string[] | null;
+  author: string;
+  published_at: string | null;
+  seo_title?: string | null;
+  seo_description?: string | null;
+};
+
+export async function fetchBlogPosts(): Promise<BlogPost[]> {
+  const res = await fetch(`${API_URL}/api/website/public/blog`, { next: { revalidate: 300 } });
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export async function fetchBlogPost(slug: string): Promise<BlogPost | null> {
+  const res = await fetch(`${API_URL}/api/website/public/blog?slug=${slug}`, { next: { revalidate: 300 } });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+export async function fetchHomepageContent(): Promise<Record<string, unknown>> {
+  const res = await fetch(`${API_URL}/api/website/public/homepage`, { next: { revalidate: 300 } });
+  if (!res.ok) return {};
+  return res.json();
+}
+
 export async function fetchPage(slug: string): Promise<CmsPage | null> {
   const res = await fetch(`${API_URL}/api/website/public/pages?slug=${slug}`, { next: { revalidate: 300 } });
   if (!res.ok) return null;

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Instagram, Facebook } from 'lucide-react'
 
 const WhatsAppIcon = () => (
@@ -14,11 +15,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                <span className="text-white font-extrabold text-sm">Ez</span>
-              </div>
-              <span className="font-extrabold text-xl">EzTrips</span>
+            <div className="mb-4">
+              <Image src="/logo.png" alt="EzTrips" width={140} height={40} className="object-contain brightness-0 invert" />
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
               Travel Without The Hassle. Curated journeys for every kind of explorer.

@@ -43,7 +43,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image src="/logo.png" alt="EzTrips" width={140} height={40} className="object-contain" />
+            <Image src="/logo.png" alt="EzTrips" width={160} height={45} className="object-contain" priority />
           </Link>
 
           {/* Desktop nav */}

@@ -3,7 +3,12 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-export default function HeroVideo() {
+type HeroVideoProps = {
+  heading?: string
+  subheading?: string
+}
+
+export default function HeroVideo({ heading, subheading }: HeroVideoProps) {
   const videoUrl = process.env.NEXT_PUBLIC_HERO_VIDEO_URL || ''
 
   return (
@@ -43,7 +48,7 @@ export default function HeroVideo() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-5xl md:text-7xl lg:text-[80px] font-extrabold leading-[1.05] tracking-tight mb-6"
         >
-          Travel Without<br />The Hassle.
+          {heading || 'Travel Without The Hassle.'}
         </motion.h1>
 
         <motion.p
@@ -52,8 +57,7 @@ export default function HeroVideo() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Curated journeys to the world&apos;s most extraordinary destinations.
-          We plan everything — you just show up.
+          {subheading || 'Curated journeys to the world\'s most extraordinary destinations. We plan everything — you just show up.'}
         </motion.p>
 
         <motion.div
