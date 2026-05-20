@@ -26,7 +26,8 @@ export default function Footer() {
                 className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
                 <Instagram size={18} />
               </a>
-              <a href="#" className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
+              <a href="https://facebook.com/eztrips.in" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
                 <Facebook size={18} />
               </a>
               <a href="https://wa.me/916203507070" className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors">
@@ -59,8 +60,14 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-label text-white/40">Pilgrimage</h4>
             <ul className="space-y-2">
-              {['Char Dham Yatra', 'Kedarnath–Badrinath', 'Varanasi Circuit', 'South India Temples', 'Maharashtra Jyotirlinga'].map(p => (
-                <li key={p}><Link href="/destinations#pilgrimage" className="text-white/70 text-sm hover:text-white transition-colors">{p}</Link></li>
+              {[
+                { label: 'Char Dham Yatra', slug: 'char-dham' },
+                { label: 'Kedarnath–Badrinath', slug: 'kedarnath-badrinath' },
+                { label: 'Varanasi Circuit', slug: 'varanasi-circuit' },
+                { label: 'South India Temples', slug: 'south-india-temples' },
+                { label: 'Maharashtra Jyotirlinga', slug: 'maharashtra-jyotirlinga' },
+              ].map(p => (
+                <li key={p.slug}><Link href={`/destinations/${p.slug}`} className="text-white/70 text-sm hover:text-white transition-colors">{p.label}</Link></li>
               ))}
             </ul>
           </div>

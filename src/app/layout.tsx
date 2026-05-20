@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import PlanTripFAB from '@/components/PlanTripFAB'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
         {children}
+        <PlanTripFAB />
         <WhatsAppButton />
       </body>
     </html>

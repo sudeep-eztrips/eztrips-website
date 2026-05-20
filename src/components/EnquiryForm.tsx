@@ -297,7 +297,28 @@ export default function EnquiryForm({ defaultDestination = '', defaultNights, de
         <span className="text-white/70 text-sm">Send me updates on WhatsApp</span>
       </label>
 
-      {serverError && <p className="text-red-300 text-sm">{serverError}</p>}
+      {serverError && (
+        <div className="bg-red-500/10 border border-red-300/30 rounded-xl p-4 space-y-3">
+          <p className="text-red-200 text-sm">{serverError}</p>
+          <p className="text-white/70 text-xs">Don&apos;t worry — reach us directly and we&apos;ll get your trip planned:</p>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href="https://wa.me/916203507070"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#1ebe57] transition-colors"
+            >
+              WhatsApp Us
+            </a>
+            <a
+              href="tel:+916203507070"
+              className="inline-flex items-center gap-2 bg-white/15 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-white/25 transition-colors"
+            >
+              Call +91 62035 07070
+            </a>
+          </div>
+        </div>
+      )}
 
       <button
         type="submit"
