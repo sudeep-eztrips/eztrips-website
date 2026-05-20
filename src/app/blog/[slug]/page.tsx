@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { fetchBlogPost } from '@/lib/api'
+import { fetchBlogPost, fetchBlogPosts } from '@/lib/api'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await fetchBlogPost(params.slug)
@@ -18,6 +18,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = await fetchBlogPost(params.slug)
   if (!post) notFound()
+
+  // Related posts: prefer tag overlap, fall back to most-recent
+  const allPosts = await fetchBlogPosts()
+  const others = allPosts.filter(p => p.slug !== params.slug)
+  const tagSet = new Set(post.tags || [])
+  const byTagScore = (p: typeof others[number]) =>
+    (p.tags || []).reduce((acc, t) => acc + (tagSet.has(t) ? 1 : 0), 0)
+  const related = [...others]
+    .sort((a, b) => byTagScore(b) - byTagScore(a) ||
+      new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime())
+    .slice(0, 3)
 
   return (
     <>
@@ -67,6 +78,33 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </Link>
           </div>
         </article>
+
+        {related.length > 0 && (
+          <section className="bg-surface py-16">
+            <div className="max-w-6xl mx-auto px-4 md:px-8">
+              <h2 className="text-2xl font-bold text-on-surface mb-8">You might also like</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {related.map(r => (
+                  <Link key={r.slug} href={`/blog/${r.slug}`}
+                    className="group block bg-white rounded-xl overflow-hidden shadow-card hover:shadow-ambient-lg transition-all duration-300">
+                    {r.hero_image && (
+                      <div className="relative h-44 overflow-hidden">
+                        <Image src={r.hero_image} alt={r.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 33vw" />
+                      </div>
+                    )}
+                    <div className="p-5">
+                      {r.tags && r.tags.length > 0 && (
+                        <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full mb-2">{r.tags[0]}</span>
+                      )}
+                      <h3 className="font-bold text-on-surface text-base leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2">{r.title}</h3>
+                      {r.excerpt && <p className="text-on-surface/60 text-sm leading-relaxed line-clamp-2">{r.excerpt}</p>}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="py-16 bg-primary-gradient text-center">
           <h2 className="text-2xl font-bold text-white mb-3">Ready to plan your trip?</h2>

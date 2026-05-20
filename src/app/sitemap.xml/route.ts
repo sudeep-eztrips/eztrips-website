@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server'
 import { allDestinations } from '@/lib/data'
+import { fetchPackages, fetchBlogPosts } from '@/lib/api'
 
 const BASE_URL = 'https://eztrips.in'
 
-export function GET() {
+export async function GET() {
+  const [packages, blogPosts] = await Promise.all([
+    fetchPackages().catch(() => []),
+    fetchBlogPosts().catch(() => []),
+  ])
+
   const urls = [
     { loc: BASE_URL, changefreq: 'weekly', priority: '1.0' },
     { loc: `${BASE_URL}/destinations`, changefreq: 'weekly', priority: '0.9' },
@@ -18,6 +24,16 @@ export function GET() {
       loc: `${BASE_URL}/destinations/${dest.slug}`,
       changefreq: 'monthly',
       priority: '0.8',
+    })),
+    ...packages.map(p => ({
+      loc: `${BASE_URL}/packages/${p.slug}`,
+      changefreq: 'monthly',
+      priority: '0.7',
+    })),
+    ...blogPosts.map(b => ({
+      loc: `${BASE_URL}/blog/${b.slug}`,
+      changefreq: 'monthly',
+      priority: '0.6',
     })),
   ]
 
